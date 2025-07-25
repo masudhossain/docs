@@ -1821,35 +1821,6 @@
             }
           }
         }
-      }, 
-      "show": {
-        "tags": ["Clients"],
-        "summary": "Get a client",
-        "security": [{ "bearerAuth": [] }],
-        "parameters": [
-          {
-            "name": "client_id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" },
-            "example": "XYZ123abc"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Client deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": { "type": "boolean", "example": true }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   }
