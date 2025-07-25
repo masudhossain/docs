@@ -75,11 +75,62 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Projects",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/projects/get",
+        "api-reference/projects/create",
+        "api-reference/projects/delete",
+        "api-reference/projects/put",
+        "api-reference/projects/show"
+      ]
+    },
+    {
+      "group": "Columns",
+      "pages": [
+        "api-reference/columns/get",
+        "api-reference/columns/create",
+        "api-reference/columns/delete",
+        "api-reference/columns/put",
+        "api-reference/columns/show"
+      ]
+    },
+    {
+      "group": "Tasks",
+      "pages": [
+        "api-reference/tasks/get",
+        "api-reference/tasks/create",
+        "api-reference/tasks/delete",
+        "api-reference/tasks/put",
+        "api-reference/tasks/show"
+      ]
+    },
+    {
+      "group": "Task comments",
+      "pages": [
+        "api-reference/task_comments/get",
+        "api-reference/task_comments/create",
+        "api-reference/task_comments/delete",
+        "api-reference/task_comments/put",
+        "api-reference/task_comments/show"
+      ]
+    },
+    {
+      "group": "Invoices",
+      "pages": [
+        "api-reference/invoices/get",
+        "api-reference/invoices/create",
+        "api-reference/invoices/delete",
+        "api-reference/invoices/put",
+        "api-reference/invoices/show"
+      ]
+    },
+    {
+      "group": "Clients",
+      "pages": [
+        "api-reference/clients/get",
+        "api-reference/clients/create",
+        "api-reference/clients/delete",
+        "api-reference/clients/show"
       ]
     }
   ],

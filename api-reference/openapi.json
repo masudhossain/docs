@@ -1,58 +1,453 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
+    "title": "Queue REST API",
+    "description": "# \ud83d\ude80 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## \ud83d\udd16 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## \ud83d\udcaa Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## \ud83d\udca1Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://app.usequeue.com/api/v1"
     }
   ],
-  "security": [
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }, 
+    "schemas": {
+      "Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "abc123"
+          },
+          "title": {
+            "type": "string",
+            "example": "My Project"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://ui-avatars.com/api/?name=A"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-01-28T15:49:48.062Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-02-28T14:37:42.441Z"
+          },
+          "archive": {
+            "type": "string",
+            "nullable": true,
+            "example": null
+          },
+          "private": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }, 
+      "Column": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "a1b2c3d4"
+          },
+          "title": {
+            "type": "string",
+            "example": "In Progress"
+          },
+          "position": {
+            "type": "integer",
+            "example": 2
+          },
+          "stage": {
+            "type": "string",
+            "example": "in_queue"
+          },
+          "finished": {
+            "type": "boolean",
+            "example": false
+          },
+          "start_timer": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      }, 
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique token ID of the task",
+            "example": "abc123"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the task",
+            "example": "Follow up with client"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the task",
+            "example": "We need to confirm delivery status by Friday."
+          },
+          "cover_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional cover image URL",
+            "example": "https://example.com/image.png"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level of the task",
+            "example": "high"
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Deadline timestamp for the task",
+            "example": "2025-08-01T17:00:00Z"
+          },
+          "position": {
+            "type": "number",
+            "description": "Position within the column",
+            "example": 3
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the task was created",
+            "example": "2025-07-25T14:21:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the task was last updated",
+            "example": "2025-07-26T09:13:00Z"
+          },
+          "fields": {
+            "type": "object",
+            "description": "Custom field values (key-value pairs)",
+            "example": {
+              "due_by": "Friday",
+              "client": "Acme Inc."
+            }
+          },
+          "sections": {
+            "type": "object",
+            "description": "Section-based field groupings (keyed by section ID)",
+            "example": {
+              "general": {
+                "status": "In Review",
+                "assignee": "Jane"
+              }
+            }
+          }
+        }
+      },
+      "TaskComment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "abcd1234"
+          },
+          "comment": {
+            "type": "string",
+            "example": "This is a comment on a task"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-07-25T14:32:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-07-25T15:00:00Z"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "user_123"
+              },
+              "username": {
+                "type": "string",
+                "example": "johndoe"
+              },
+              "avatar": {
+                "type": "string",
+                "format": "uri",
+                "example": "https://example.com/avatar.png"
+              }
+            }
+          }
+        }
+      }, 
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "abc123" },
+          "name": { "type": "string", "example": "Invoice May 2025" },
+          "amount": { "type": "number", "example": 1500 },
+          "bill_to": { "type": "string", "example": "masud@yopmail.com" },
+          "bill_from": { "type": "string", "example": "admin@queue.com" },
+          "address": { "type": "string", "example": "123 fake st. blvd" },
+          "tax": { "type": "number", "example": 7.5 },
+          "payment_terms": { "type": "string", "example": "Net 30" },
+          "due": { "type": "string", "format": "date", "example": "2025-08-15" },
+          "issued": { "type": "string", "format": "date", "example": "2025-07-25" },
+          "payment_method": { "type": "string", "example": "wire" },
+          "invoice_number": { "type": "string", "example": "INV-1234" },
+          "credit_type": { "type": "string", "example": "none" },
+          "recurring_invoice_items": {
+            "type": "array",
+            "items": { "type": "object" }
+          },
+          "invoice_items": {
+            "type": "array",
+            "items": { "type": "object" }
+          },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string", "example": "Masud" },
+              "email": { "type": "string", "example": "masud@yopmail.com" }
+            }
+          }
+        }
+      },
+      "Clients": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "abc123" },
+          "username": { "type": "string", "example": "Client Inc." },
+          "email": { "type": "string", "example": "client@company.com" }
+        }
+      }
+    }, 
+    "parameters": {
+      "Column.Title": {
+        "name": "title",
+        "in": "query",
+        "description": "The title of the column",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "Backlog"
+      },
+      "Column.Position": {
+        "name": "position",
+        "in": "query",
+        "description": "The column's position (0-indexed) within the project",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "example": 1
+      },
+      "Column.Stage": {
+        "name": "stage",
+        "in": "query",
+        "description": "The internal stage type of the column. Can be 'in_queue', 'in_progress', or 'done'",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": ["in_queue", "in_progress", "done"]
+        },
+        "example": "in_queue"
+      },
+      "Column.Finished": {
+        "name": "finished",
+        "in": "query",
+        "description": "Whether tasks in this column are marked as finished",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        },
+        "example": false
+      },
+      "Column.StartTimer": {
+        "name": "start_timer",
+        "in": "query",
+        "description": "Whether tasks in this column should start the timer automatically",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        },
+        "example": true
+      }, 
+      "Task.ID": {
+        "name": "task_id",
+        "in": "path",
+        "required": true,
+        "description": "The unique identifier of the task",
+        "schema": {
+          "type": "string"
+        },
+        "example": "abc123"
+      },
+      "Task.Title": {
+        "name": "title",
+        "in": "query",
+        "description": "Title of the task",
+        "schema": {
+          "type": "string"
+        },
+        "example": "Follow up with client"
+      },
+      "Task.Description": {
+        "name": "description",
+        "in": "query",
+        "description": "Description of the task",
+        "schema": {
+          "type": "string"
+        },
+        "example": "We need to confirm delivery status by Friday."
+      },
+      "Task.CoverURL": {
+        "name": "cover_url",
+        "in": "query",
+        "description": "Optional cover image URL",
+        "schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "example": "https://example.com/image.png"
+      },
+      "Task.Priority": {
+        "name": "priority",
+        "in": "query",
+        "description": "Priority level of the task",
+        "schema": {
+          "type": "string",
+          "enum": ["Low", "Medium", "High"]
+        },
+        "example": "High"
+      },
+      "Task.Deadline": {
+        "name": "deadline",
+        "in": "query",
+        "description": "Deadline timestamp (ISO 8601)",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-08-01T17:00:00Z"
+      },
+      "Task.Position": {
+        "name": "position",
+        "in": "query",
+        "description": "Position of the task in its column",
+        "schema": {
+          "type": "number"
+        },
+        "example": 3
+      }, 
+      "TaskComment.Comment": {
+        "name": "comment",
+        "in": "query",
+        "description": "Text content of the comment",
+        "schema": {
+          "type": "string"
+        },
+        "example": "Looks good!"
+      },
+      "TaskComment.TaskId": {
+        "name": "task_id",
+        "in": "query",
+        "description": "The ID of the task this comment belongs to",
+        "schema": {
+          "type": "string"
+        },
+        "example": "task_abc123"
+      },
+      "TaskComment.Private": {
+        "name": "private",
+        "in": "query",
+        "description": "Set to true to make the comment private",
+        "schema": {
+          "type": "boolean"
+        },
+        "example": false
+      },
+      "TaskComment.Id": {
+        "name": "task_comment_id",
+        "in": "path",
+        "description": "The ID of the specific task comment",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "vK1mRQRdCLMauu8SifTCDfxe"
+      }
+
+    }
+  },
+  "tags": [
     {
-      "bearerAuth": []
+      "name": "Projects"
+    },
+    {
+      "name": "Tasks"
+    },
+    {
+      "name": "Columns"
+    },
+    {
+      "name": "Task Comments"
+    },
+    {
+      "name": "Invoices"
     }
   ],
   "paths": {
-    "/plants": {
+    "/projects": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get projects",
+        "security": [
           {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+            "bearerAuth": []
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "projects": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Project"
+                      }
+                    }
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -60,35 +455,1306 @@
         }
       },
       "post": {
-        "description": "Creates a new plant in the store",
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create project",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Title of the project. Must be a string and usually the name of your client. For example AirBnB.",
+            "example": "api test 3"
+          },
+          {
+            "name": "avatar",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            },
+            "example": "https://ui-avatars.com/api/?name=A"
+          },
+          {
+            "name": "private",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": false
+          },
+          {
+            "name": "archive",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "projects": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Project"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get project",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "9cfabb1d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "project": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Project"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Update project",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "hehe2"
+          },
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "9cfabb1d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "project": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Project"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Delete project",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "9cfabb1d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/columns": {
+      "get": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Get Columns",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Column"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create task",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Column.Title"
+          },
+          {
+            "$ref": "#/components/parameters/Column.Position"
+          },
+          {
+            "$ref": "#/components/parameters/Column.Stage"
+          },
+          {
+            "$ref": "#/components/parameters/Column.Finished"
+          },
+          {
+            "$ref": "#/components/parameters/Column.StartTimer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "column": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Column"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/columns/{column_id}": {
+      "delete": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Delete column",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "patch": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Update column",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Column.Title"
+          },
+          {
+            "$ref": "#/components/parameters/Column.Position"
+          },
+          {
+            "$ref": "#/components/parameters/Column.Stage"
+          },
+          {
+            "$ref": "#/components/parameters/Column.Finished"
+          },
+          {
+            "$ref": "#/components/parameters/Column.StartTimer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "column": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Column"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "get": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Get column",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "column_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "cc3d40e8cc4c97e5c5c62cbe7ec5b4c7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "column": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Column"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/columns/{column_id}/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get column tasks",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Task"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create task",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Task.Title"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Description"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Priority"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Deadline"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Position"
+          },
+          {
+            "$ref": "#/components/parameters/Task.CoverURL"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Sections"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Task"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Delete task",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Task"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Delete task",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update task",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "abc123"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Title"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Description"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Priority"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Deadline"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Position"
+          },
+          {
+            "$ref": "#/components/parameters/Task.CoverURL"
+          },
+          {
+            "$ref": "#/components/parameters/Task.Sections"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Task"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{task_id}/task_comments": {
+      "post": {
+        "tags": [
+          "Task Comments"
+        ],
+        "summary": "Create task comment",
+        "requestBody": {
+          "content": {}
+        },
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the task to which the comment belongs",
+            "required": true,
+            "example": "eaNyjiGfJM8vdQaJwdreeE7E"
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Text content of the comment",
+            "required": true,
+            "example": "API comment from postman 1"
+          }, 
+          {
+            "name": "private",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Set to true to make the comment private",
+            "example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task_comment": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/TaskComment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "get": {
+        "tags": ["Task Comments"],
+        "summary": "Get all task comments for a task",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TaskComment.Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of task comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task_comments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TaskComment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task_comments/{task_comment_id}": {
+      "patch": {
+        "tags": [
+          "Task Comments"
+        ],
+        "summary": "Update task comment",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TaskComment.Id"
+          },
+          {
+            "$ref": "#/components/parameters/TaskComment.Comment"
+          },
+          {
+            "$ref": "#/components/parameters/TaskComment.Private"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task_comment": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/TaskComment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Task Comments"
+        ],
+        "summary": "Delete task comment",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TaskComment.Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Task Comments"
+        ],
+        "summary": "Get task comment",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TaskComment.Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/invoices": {
+      "get": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Get Invoices",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "invoices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Invoice"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "New Invoice",
+        "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "type": "object",
+                "example": {
+                  "invoice_items": [
+                    {
+                      "token": "b4bf704d-ef6e-4c40-856b-d5ace731698bxx",
+                      "amount": 100,
+                      "interval": null,
+                      "quantity": 1,
+                      "frequency": null,
+                      "description": "Item 1"
+                    },
+                    {
+                      "token": "f9fef62c-0fe9-4117-a96a-96502f71c4f1xx",
+                      "amount": 200,
+                      "interval": "month",
+                      "quantity": 1,
+                      "frequency": null,
+                      "description": "Item 2"
+                    }
+                  ]
+                }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "bill_to",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "masud@yopmail.com"
           },
-          "required": true
+          {
+            "name": "address",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "123 fake st. blvd "
+          },
+          {
+            "name": "tax",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            },
+            "example": "7.5"
+          },
+          {
+            "name": "payment_terms",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "test 123"
+          },
+          {
+            "name": "due",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "2025-07-23"
+          },
+          {
+            "name": "payment_method",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "wire"
+          },
+          {
+            "name": "invoice_number",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1234"
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "usd"
+          },
+          {
+            "name": "credit_type",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "false"
+          },
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "invoice": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{invoice_id}": {
+      "delete": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Delete Invoice",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "TPz6xJAoETRaUmtoxgGiYfsE"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "get": {
+        "summary": "Get a specific invoice",
+        "tags": ["Invoices"],
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Invoice detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "invoice": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "patch": {
+        "summary": "Update an invoice",
+        "tags": ["Invoices"],
+        "parameters": [
+          { "$ref": "#/components/parameters/Invoice.Name" },
+          { "$ref": "#/components/parameters/Invoice.Amount" },
+          { "$ref": "#/components/parameters/Invoice.BillTo" },
+          { "$ref": "#/components/parameters/Invoice.BillFrom" },
+          { "$ref": "#/components/parameters/Invoice.Address" },
+          { "$ref": "#/components/parameters/Invoice.Tax" },
+          { "$ref": "#/components/parameters/Invoice.PaymentTerms" },
+          { "$ref": "#/components/parameters/Invoice.Due" },
+          { "$ref": "#/components/parameters/Invoice.Issued" },
+          { "$ref": "#/components/parameters/Invoice.PaymentMethod" },
+          { "$ref": "#/components/parameters/Invoice.InvoiceNumber" },
+          { "$ref": "#/components/parameters/Invoice.CreditType" },
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Invoice updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "invoice": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/projects/{project_id}/clients": {
+      "get": {
+        "tags": ["Clients"],
+        "summary": "Get Clients for a Project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": { "type": "string" },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "clients": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Clients" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Clients"],
+        "summary": "Create Client for a Project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "026da5d1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email"],
+                "properties": {
+                  "name": { "type": "string", "example": "Client Inc." },
+                  "email": { "type": "string", "example": "client@company.com" },
+                  "company": { "type": "string", "example": "Acme Corp" },
+                  "avatar": { "type": "string", "example": "https://ui-avatars.com/api/?name=C" }
+                }
+              }
+            }
+          }
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Client created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "client": { "$ref": "#/components/schemas/Clients" }
+                  }
                 }
               }
             }
@@ -96,99 +1762,94 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/clients/{client_id}": {
+      "get": {
+        "tags": ["Clients"],
+        "summary": "Get a specific client",
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
-            "name": "id",
+            "name": "client_id",
             "in": "path",
-            "description": "ID of plant to delete",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "schema": { "type": "string" },
+            "example": "XYZ123abc"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Client detail",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "client": { "$ref": "#/components/schemas/Clients" }
+                  }
                 }
               }
             }
           }
         }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
       },
-      "NewPlant": {
-        "allOf": [
+      "delete": {
+        "tags": ["Clients"],
+        "summary": "Delete a client",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
           {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+            "name": "client_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "XYZ123abc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
               }
             }
           }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
+        }
+      }, 
+      "show": {
+        "tags": ["Clients"],
+        "summary": "Get a client",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "XYZ123abc"
+          }
         ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
+        "responses": {
+          "200": {
+            "description": "Client deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
       }
     }
   }
