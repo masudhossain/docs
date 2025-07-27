@@ -239,6 +239,200 @@
           "username": { "type": "string", "example": "Client Inc." },
           "email": { "type": "string", "example": "client@company.com" }
         }
+      },
+      "ServiceCheckout": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "sub_1RMsEgG02uXfwr5Hbn98NqDD" },
+          "checkout_session_id": { "type": "string" },
+          "pause_date": { "type": "string", "format": "date-time", "nullable": true },
+          "paused": { "type": "boolean" },
+          "days_left": { "type": "integer", "nullable": true },
+          "completed": { "type": "boolean", "nullable": true },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "default": { "type": "boolean" },
+          "cancel_date": { "type": "string", "format": "date-time", "nullable": true },
+          "months_since_creation": { "type": "integer" },
+          "archive": { "type": "boolean", "nullable": true },
+          "qty": { "type": "integer", "example": 1 },
+          "addons_purchased": { "type": "boolean" },
+          "currency": { "type": "string", "example": "usd" },
+          "disable_pause": { "type": "boolean", "nullable": true },
+          "paypal_subscription_data": { "type": "object", "nullable": true },
+          "paypal_single_charge_data": { "type": "object", "nullable": true },
+          "retention_coupon_used": { "type": "boolean" },
+          "unsubscribe_reason": { "type": "string", "nullable": true },
+          "unsubscribed_feedback": { "type": "string", "nullable": true },
+          "stripe_subscription_id": { "type": "string" },
+          "stripe_payment_intent_id": { "type": "string", "nullable": true },
+          "service_price": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" }
+            }
+          },
+          "service": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" }
+            }
+          }
+        }
+      },
+      "Timesheet": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "V5xkqELXjhGwSpDJSWXGHumZ" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "task": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "example": "LgFv67mHFVGTrvmBG8nUZuV6" },
+              "title": { "type": "string", "example": "11" }
+            }
+          },
+          "project": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "example": "3c82c4be" },
+              "title": { "type": "string", "example": "AirBnB edited" }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string", "example": "Masud Hossain" },
+              "email": { "type": "string", "format": "email", "example": "masud@yopmail.com" },
+              "avatar": { "type": "string", "format": "uri" }
+            }
+          },
+          "is_active": { "type": "boolean", "nullable": true },
+          "elapsed_time": { "type": "number", "nullable": true },
+          "start_time": { "type": "string", "format": "date-time", "nullable": true },
+          "end_time": { "type": "string", "format": "date-time", "nullable": true },
+          "duration": { "type": "number", "example": 3600.0 },
+          "notes": { "type": "string" },
+          "billable": { "type": "boolean", "nullable": true },
+          "billable_rate": { "type": "number", "nullable": true },
+          "finished": { "type": "boolean" },
+          "formatted_duration": { "type": "string", "example": "1 hours, 0 minutes, 0 seconds" },
+          "short_formatted_duration": {
+            "type": "object",
+            "properties": {
+              "display": { "type": "string", "example": "1h 0m" },
+              "decimal": { "type": "number", "example": 1.0 }
+            }
+          },
+          "hourly_rate": { "type": "string", "example": "100.25" }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "af604afd112e974728b41a463652c77c"
+          },
+          "title": {
+            "type": "string",
+            "example": "Service title example"
+          },
+          "description": {
+            "type": "string",
+            "example": "Service description example"
+          },
+          "active": {
+            "type": "boolean",
+            "example": true
+          },
+          "default_price": {
+            "type": "string",
+            "example": "$1,000 per month"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "preview_image": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/preview-image.jpg"
+          },
+          "addon": {
+            "type": "boolean",
+            "example": false
+          },
+          "disable_pause": {
+            "type": "boolean",
+            "example": false
+          },
+          "disable_quantity": {
+            "type": "boolean",
+            "example": false
+          },
+          "cancel_at_period_end": {
+            "type": "boolean",
+            "example": false
+          },
+          "position": {
+            "type": "integer",
+            "example": 3
+          },
+          "coupon_id": {
+            "type": "string",
+            "example": "coupon_id"
+          },
+          "minimum_months": {
+            "type": "integer",
+            "example": 100
+          },
+          "require_payment_method": {
+            "type": "boolean",
+            "example": false
+          },
+          "limit_pausing": {
+            "type": "integer",
+            "example": false
+          },
+          "checkout_link": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://app.usequeue.com/services/af604afd112e974728b41a463652c77c/checkouts"
+          },
+          "service_prices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "8cf453ebcb70f64d4c1960efe100cf90"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "$1 per 1 month"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "usd"
+                }
+              },
+              "required": ["id", "price", "created_at", "updated_at", "currency"]
+            }
+          }
+        }
       }
     }, 
     "parameters": {
@@ -1815,6 +2009,382 @@
                   "type": "object",
                   "properties": {
                     "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/projects/{project_id}/service_checkouts": {
+      "get": {
+        "tags": ["Service Checkouts"],
+        "summary": "Get Service Checkouts for a Project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": { "type": "string" },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "service_checkouts": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/ServiceCheckout" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_checkouts/{service_checkout_id}": {
+      "get": {
+        "tags": ["Service Checkouts"],
+        "summary": "Get a specific service checkout",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "service_checkout_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "XYZ123abc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "service_checkout": { "$ref": "#/components/schemas/ServiceCheckout" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Service Checkouts"],
+        "summary": "Delete a service checkout",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "service_checkout_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "XYZ123abc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/projects/{project_id}/timesheets": {
+      "get": {
+        "tags": ["Timesheets"],
+        "summary": "Get all timesheets for a project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "3c82c4be"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "timesheets": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Timesheet" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "post": {
+        "tags": ["Timesheets"],
+        "summary": "Create a new timesheet",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }, 
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "schema": { "type": "string" }
+          }, 
+          {
+            "name": "duration",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "Duration of the timesheet in milliseconds"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "task_id": "LgFv67mHFVGTrvmBG8nUZuV6",
+                  "start_time": "2025-01-18T15:00:00.000Z",
+                  "end_time": "2025-01-18T16:00:00.000Z",
+                  "notes": "Worked on setup",
+                  "billable": true,
+                  "billable_rate": 100.25
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "timesheet": { "$ref": "#/components/schemas/Timesheet" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }    
+    }, 
+    "/timesheets/{timesheet_id}": {
+      "get": {
+        "tags": ["Timesheets"],
+        "summary": "Get a specific timesheet",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "timesheet_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found timesheet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "timesheet": { "$ref": "#/components/schemas/Timesheet" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "patch": {
+        "tags": ["Timesheets"],
+        "summary": "Update a timesheet",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }, 
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "schema": { "type": "string" }
+          }, 
+          {
+            "name": "duration",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "Duration of the timesheet in milliseconds"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "task_id": "LgFv67mHFVGTrvmBG8nUZuV6",
+                  "start_time": "2025-01-18T15:00:00.000Z",
+                  "end_time": "2025-01-18T16:00:00.000Z",
+                  "notes": "Worked on setup",
+                  "billable": true,
+                  "billable_rate": 100.25
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "timesheet": { "$ref": "#/components/schemas/Timesheet" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Timesheets"],
+        "summary": "Delete a timesheet",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "timesheet_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/services": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get all services",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "List of services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "services": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Service" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/services/{service_id}": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get a specific service",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "af604afd112e974728b41a463652c77c"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "service": { "$ref": "#/components/schemas/Service" }
                   }
                 }
               }

@@ -132,6 +132,31 @@
         "api-reference/clients/delete",
         "api-reference/clients/show"
       ]
+    },
+    {
+      "group": "Service Checkouts",
+      "pages": [
+        "api-reference/service_checkouts/get",
+        "api-reference/service_checkouts/delete",
+        "api-reference/service_checkouts/show"
+      ]
+    },
+    {
+      "group": "Timesheets",
+      "pages": [
+        "api-reference/timesheets/get",
+        "api-reference/timesheets/create",
+        "api-reference/timesheets/delete",
+        "api-reference/timesheets/put",
+        "api-reference/timesheets/show"
+      ]
+    },
+    {
+      "group": "Services",
+      "pages": [
+        "api-reference/services/get",
+        "api-reference/services/show"
+      ]
     }
   ],
   "footerSocials": {
