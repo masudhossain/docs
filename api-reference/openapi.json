@@ -478,7 +478,58 @@
           }
         },
         "required": ["id", "token", "title", "file_link", "created_at", "updated_at", "user", "project"]
+      }, 
+      "FileComment": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 97 },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "text": { "type": "string", "example": "changed hehe" },
+          "private": { "type": "boolean", "example": false },
+          "file": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "example": "529e15ad83ee" },
+              "title": { "type": "string", "example": "10x faster.png" },
+              "link": { "type": "string", "format": "uri" }
+            }
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "comments": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Comment" }
+          }
+        },
+        "required": ["id", "created_at", "updated_at", "text", "file", "user"]
+      }, 
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 3 },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "body": { "type": "string", "example": "<p>nested reply</p>" },
+          "file_comment_id" : { "type": "integer", "example": 97 },
+          "private": { "type": "boolean" },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["id", "created_at", "updated_at", "body", "user"]
+      }, 
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "avatar": { "type": "string", "format": "uri" }
+        },
+        "required": ["username", "email"]
       }
+
     }, 
     "parameters": {
       "Column.Title": {
@@ -1486,6 +1537,44 @@
         }
       }
     },
+    "/task_comments/{task_comment_id}/comments": {
+      "get": {
+        "summary": "Get replies for a task comment",
+        "tags": ["TaskComments"],
+        "parameters": [
+          {
+            "name": "task_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "abc123"
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "List of nested task comment replies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TaskComment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    
     "/task_comments/{task_comment_id}": {
       "patch": {
         "tags": [
@@ -2523,6 +2612,271 @@
                   "type": "object",
                   "properties": {
                     "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/files/{file_id}/file_comments": {
+      "get": {
+        "summary": "List File Comments",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Array of file comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/FileComment" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create File Comment",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": { "type": "string" },
+                  "private": { "type": "boolean" }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Created file comment",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FileComment" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file_comments/{file_comment_id}": {
+      "patch": {
+        "summary": "Update File Comment",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": { "type": "string" },
+                  "private": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Updated file comment",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FileComment" }
+              }
+            }
+          }
+        }
+      }, 
+      "get": {
+        "summary": "Get File Comment",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "File comment details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FileComment" }
+              }
+            }
+          }
+        }
+      }, 
+      "delete": {
+        "summary": "Delete File Comment",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "File comment deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file_comments/{file_comment_id}/comments": {
+      "get": {
+        "summary": "List Replies to File Comment",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Nested comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Comment" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Reply to File Comment",
+        "tags": ["FileComments"],
+        "parameters": [
+          {
+            "name": "file_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "body": { "type": "string" },
+                  "private": { "type": "boolean" }
+                },
+                "required": ["body"]
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Reply created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Comment" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task_comments/{task_comment_id}/reply": {
+      "post": {
+        "tags": ["Task Comments"],
+        "summary": "Reply to task comment",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "task_comment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "abc123"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": { "type": "string", "example": "This is a reply" },
+                  "private": { "type": "boolean", "example": false }
+                },
+                "required": ["comment"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reply created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "task_comment": { "$ref": "#/components/schemas/TaskComment" }
                   }
                 }
               }

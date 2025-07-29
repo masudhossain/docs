@@ -1,33 +1,100 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Complete REST API documentation for Queue project management platform'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Welcome to the Queue API
 
-## Welcome
+Welcome to the Queue REST API! Queue is a powerful project management platform that helps teams organize tasks, track time, manage clients, and streamline workflows. Our comprehensive API allows you to integrate with all aspects of the Queue platform programmatically.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Getting Started
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+### Authentication
 
-## Authentication
+All API endpoints require authentication using Bearer tokens. To get your API key:
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+1. Navigate to your **Workspace > Settings > API Keys**
+2. Generate a new API key
+3. Include it in the `Authorization` header of all requests:
+
+```bash
+Authorization: Bearer your_api_key_here
+```
+
+### Base URL
+
+All API requests should be made to:
+```
+https://app.usequeue.com/api/v1
+```
+
+## API Structure
+
+The Queue API is organized around these core resources:
+
+### 📁 Projects
+- **Projects** - Create and manage client projects
+- **Columns** - Organize tasks into customizable workflow columns
+- **Tasks** - Core task management with custom fields and priorities
+
+### 💬 Comments & Communication
+- **Task Comments** - Comment on tasks with replies and private notes
+- **File Comments** - Annotate uploaded files with feedback
+
+### 👥 Team & Client Management
+- **Clients** - Manage client information and access
+- **Users** - Team member management and permissions
+
+### ⏱️ Time Tracking
+- **Timesheets** - Track billable and non-billable time
+- **Time Entries** - Detailed time logging with task association
+
+### 💰 Business Operations
+- **Invoices** - Generate and manage client invoices
+- **Services** - Define service offerings and pricing
+- **Service Checkouts** - Handle service purchases and subscriptions
+
+### 📎 File Management
+- **Files** - Upload, organize, and share project files
+- **File Comments** - Collaborate on file reviews
+
+## Response Format
+
+All API responses follow a consistent format:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "success": true,
+  "data": {
+    // Resource data here
   }
-]
+}
 ```
+
+Error responses include detailed error information:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Description of what went wrong"
+  }
+}
+```
+
+## Rate Limits
+
+API requests are limited to ensure platform stability. Current limits:
+- **1000 requests per hour** per API key
+- **Burst limit**: 50 requests per minute
+
+Rate limit headers are included in all responses to help you track usage.
+
+<Card
+  title="Explore the Queue API"
+  icon="code"
+  href="/api-reference/projects"
+>
+  Start with Projects - the foundation of Queue's organization system
+</Card>

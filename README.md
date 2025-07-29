@@ -1,6 +1,6 @@
-# Mintlify Starter Kit - edited
+# Queue Starter Kit - edited
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+Click on `Use this template` to copy the Queue starter kit. The starter kit contains examples including
 
 * Guide pages
 * Navigation
@@ -10,16 +10,16 @@ Click on `Use this template` to copy the Mintlify starter kit. The starter kit c
 
 ### Development
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+Install the [Queue CLI](https://www.npmjs.com/package/queue) to preview the documentation changes locally. To install, use the following command
 
 ```
-npm i -g mintlify
+npm i -g queue
 ```
 
 Run the following command at the root of your documentation (where mint.json is)
 
 ```
-mintlify dev
+queue dev
 ```
 
 ### Publishing Changes
@@ -28,5 +28,5 @@ Install our Github App to autopropagate changes from youre repo to your deployme
 
 #### Troubleshooting
 
-* Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
+* Queue dev isn't running - Run `queue install` it'll re-install dependencies.
 * Page loads as a 404 - Make sure you are running in a folder with `mint.json`

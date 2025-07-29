@@ -18,12 +18,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:masud@usequeue.com"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://app.usequeue.com"
   },
   "tabs": [
     {
@@ -33,45 +33,103 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Queue",
+      "icon": "globe",
+      "url": "https://www.usequeue.com"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Discord Community",
+      "icon": "discord",
+      "url": "https://discord.com/invite/qBzqz8XB7V"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "introduction"
       ]
     },
     {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
+      ]
+    },
+    {
+      "group": "🚀 Workspace setup",
+      "pages": [
+        "workspace/account-setup",
+        "workspace/team-onboarding",
+        "workspace/initial-configuration",
+        "workspace/migration-guide"
+      ]
+    },
+    {
+      "group": "🏁 Project & Task Management",
+      "pages": [
+        "project-management/creating-projects",
+        "project-management/task-management",
+        "project-management/custom-fields",
+        "project-management/workflow-automation"
+      ]
+    },
+    {
+      "group": "💬 Collaboration & Feedback",
+      "pages": [
+        "collaboration/task-comments",
+        "collaboration/feedback-tools",
+        "collaboration/real-time-updates",
+        "collaboration/client-communication"
+      ]
+    },
+    {
+      "group": "📁 File & Client Portal Management",
+      "pages": [
+        "file-management/file-organization",
+        "file-management/file-sharing",
+        "file-management/version-control",
+        "client-portal/setup"
+      ]
+    },
+    {
+      "group": "💰 Billing, Invoicing & Credits",
+      "pages": [
+        {
+          "group": "Services",
+          "pages": [
+            "billing/services/integrating-stripe",
+            "billing/services/add-ons",
+            "billing/services/discounts", 
+            "billing/services/credit-tracking"
+          ]
+        },
+        {
+          "group": "Invoices",
+          "pages": [
+            "billing/invoices/invoices-with-credit-track"
+          ]
+        },
+        "billing/checkout",
+        {
+          "group": "Subscription Management",
+          "pages": [
+            "billing/subscriptions/upgrading-downgrading-plans",
+            "billing/subscriptions/advanced-options",
+            "billing/subscriptions/retention-promos"
+          ]
+        },
+        "billing/referral-program",
+        "billing/time-tracking"
+      ]
+    },
+    {
+      "group": "📊 Reports & Insights",
+      "pages": [
+        "reports/time-tracking",
+        "reports/project-analytics",
+        "reports/revenue-insights",
+        "reports/client-reports"
       ]
     },
     {
@@ -111,7 +169,9 @@
         "api-reference/task_comments/create",
         "api-reference/task_comments/delete",
         "api-reference/task_comments/put",
-        "api-reference/task_comments/show"
+        "api-reference/task_comments/show", 
+        "api-reference/task_comments/task_comment_replies",
+        "api-reference/task_comments/reply"
       ]
     },
     {
@@ -164,6 +224,18 @@
         "api-reference/files/get",
         "api-reference/files/show",
         "api-reference/files/delete"
+      ]
+    }, 
+    {
+      "group": "File comments",
+      "pages": [
+        "api-reference/file_comments/get",
+        "api-reference/file_comments/show",
+        "api-reference/file_comments/create",
+        "api-reference/file_comments/delete",
+        "api-reference/file_comments/put",
+        "api-reference/file_comments/comments",
+        "api-reference/files_comments/create_comment"
       ]
     }
   ],
