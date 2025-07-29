@@ -433,6 +433,51 @@
             }
           }
         }
+      }, 
+      "File": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "abc123" },
+          "title": { "type": "string", "example": "10x faster.png" },
+          "file_link": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://app.usequeue.com/replays/529e15ad83ee"
+          },
+          "private": { "type": "boolean" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string", "example": "Masud Hossain" },
+              "email": { "type": "string", "format": "email" },
+              "avatar": {
+                "type": "string",
+                "format": "uri",
+                "example": "https://cdn.filestackcontent.com/resize=width:100,height:100/PQXgUZHdQW2diRa61cya"
+              }
+            },
+            "required": ["username", "email"]
+          },
+          "project": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string", "example": "AirBnB edited" },
+              "id": { "type": "string", "example": "3c82c4be" }
+            },
+            "required": ["title", "id"]
+          },
+          "folder": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string", "example": "Folder 21" },
+              "id": { "type": "string", "example": "ba722ed99a130e28ca7aa27437037349" }
+            },
+            "required": ["title", "id"]
+          }
+        },
+        "required": ["id", "token", "title", "file_link", "created_at", "updated_at", "user", "project"]
       }
     }, 
     "parameters": {
@@ -2385,6 +2430,99 @@
                   "properties": {
                     "success": { "type": "boolean", "example": true },
                     "service": { "$ref": "#/components/schemas/Service" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/projects/{project_id}/files": {
+      "get": {
+        "tags": ["Files"],
+        "summary": "List files for a project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of files",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "files": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/File" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/{file_id}": {
+      "get": {
+        "tags": ["Files"],
+        "summary": "Get file details",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "file": { "$ref": "#/components/schemas/File" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "delete": {
+        "tags": ["Files"],
+        "summary": "Delete a file",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
                   }
                 }
               }

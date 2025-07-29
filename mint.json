@@ -157,6 +157,14 @@
         "api-reference/services/get",
         "api-reference/services/show"
       ]
+    },
+    {
+      "group": "Files",
+      "pages": [
+        "api-reference/files/get",
+        "api-reference/files/show",
+        "api-reference/files/delete"
+      ]
     }
   ],
   "footerSocials": {
