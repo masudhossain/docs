@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Starter Kit",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
@@ -38,6 +38,11 @@
       "url": "https://www.usequeue.com"
     },
     {
+      "name": "Video guides",
+      "icon": "video",
+      "url": "https://guides.usequeue.com"
+    }, 
+    {
       "name": "Discord Community",
       "icon": "discord",
       "url": "https://discord.com/invite/qBzqz8XB7V"
@@ -56,82 +61,7 @@
         "api-reference/introduction"
       ]
     },
-    {
-      "group": "🚀 Workspace setup",
-      "pages": [
-        "workspace/account-setup",
-        "workspace/team-onboarding",
-        "workspace/initial-configuration",
-        "workspace/migration-guide"
-      ]
-    },
-    {
-      "group": "🏁 Project & Task Management",
-      "pages": [
-        "project-management/creating-projects",
-        "project-management/task-management",
-        "project-management/custom-fields",
-        "project-management/workflow-automation"
-      ]
-    },
-    {
-      "group": "💬 Collaboration & Feedback",
-      "pages": [
-        "collaboration/task-comments",
-        "collaboration/feedback-tools",
-        "collaboration/real-time-updates",
-        "collaboration/client-communication"
-      ]
-    },
-    {
-      "group": "📁 File & Client Portal Management",
-      "pages": [
-        "file-management/file-organization",
-        "file-management/file-sharing",
-        "file-management/version-control",
-        "client-portal/setup"
-      ]
-    },
-    {
-      "group": "💰 Billing, Invoicing & Credits",
-      "pages": [
-        {
-          "group": "Services",
-          "pages": [
-            "billing/services/integrating-stripe",
-            "billing/services/add-ons",
-            "billing/services/discounts", 
-            "billing/services/credit-tracking"
-          ]
-        },
-        {
-          "group": "Invoices",
-          "pages": [
-            "billing/invoices/invoices-with-credit-track"
-          ]
-        },
-        "billing/checkout",
-        {
-          "group": "Subscription Management",
-          "pages": [
-            "billing/subscriptions/upgrading-downgrading-plans",
-            "billing/subscriptions/advanced-options",
-            "billing/subscriptions/retention-promos"
-          ]
-        },
-        "billing/referral-program",
-        "billing/time-tracking"
-      ]
-    },
-    {
-      "group": "📊 Reports & Insights",
-      "pages": [
-        "reports/time-tracking",
-        "reports/project-analytics",
-        "reports/revenue-insights",
-        "reports/client-reports"
-      ]
-    },
+    
     {
       "group": "Projects",
       "pages": [
