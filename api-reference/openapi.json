@@ -2246,6 +2246,99 @@
           }
         }
       }
+    },
+    "/service_checkouts/{service_checkout_id}/pause": {
+      "post": {
+        "tags": ["Service Checkouts"],
+        "summary": "Pause a service checkout",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "service_checkout_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "sub_1RMsEgG02uXfwr5Hbn98NqDD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service checkout paused successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_checkouts/{service_checkout_id}/unpause": {
+      "post": {
+        "tags": ["Service Checkouts"],
+        "summary": "Unpause a service checkout",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "service_checkout_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "sub_1RMsEgG02uXfwr5Hbn98NqDD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service checkout unpaused successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_checkouts/{service_checkout_id}/cancel": {
+      "post": {
+        "tags": ["Service Checkouts"],
+        "summary": "Cancel a service checkout",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "service_checkout_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "sub_1RMsEgG02uXfwr5Hbn98NqDD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service checkout cancelled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }, 
     "/projects/{project_id}/timesheets": {
       "get": {

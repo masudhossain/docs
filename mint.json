@@ -128,7 +128,10 @@
       "pages": [
         "api-reference/service_checkouts/get",
         "api-reference/service_checkouts/delete",
-        "api-reference/service_checkouts/show"
+        "api-reference/service_checkouts/show",
+        "api-reference/service_checkouts/pause",
+        "api-reference/service_checkouts/unpause",
+        "api-reference/service_checkouts/cancel"
       ]
     },
     {

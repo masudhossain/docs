@@ -19,7 +19,7 @@ npm i -g queue
 Run the following command at the root of your documentation (where mint.json is)
 
 ```
-queue dev
+mintlify dev
 ```
 
 ### Publishing Changes
