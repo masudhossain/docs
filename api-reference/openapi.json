@@ -196,7 +196,33 @@
             }
           }
         }
-      }, 
+      },
+      "TaskCredit": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "token": { "type": "string", "example": "abc123xyz" },
+          "credits": { "type": "number", "example": 5.0 },
+          "comment": { "type": "string", "example": "Credit for logo design" },
+          "user_id": { "type": "integer", "example": 42 },
+          "task_id": { "type": "integer", "example": 7 },
+          "service_checkout_id": { "type": "integer", "nullable": true, "example": null },
+          "created_at": { "type": "string", "example": "06/22/2026" },
+          "automated": { "type": "boolean", "example": false },
+          "invoice_service_id": { "type": "integer", "nullable": true, "example": null },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string", "example": "Masud Hossain" }
+            }
+          },
+          "service": {
+            "type": "object",
+            "nullable": true,
+            "example": null
+          }
+        }
+      },
       "Invoice": {
         "type": "object",
         "properties": {
@@ -705,6 +731,9 @@
     },
     {
       "name": "Invoices"
+    },
+    {
+      "name": "Task Credits"
     }
   ],
   "paths": {
@@ -2970,6 +2999,201 @@
                   "properties": {
                     "success": { "type": "boolean", "example": true },
                     "task_comment": { "$ref": "#/components/schemas/TaskComment" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/task_credits": {
+      "get": {
+        "tags": ["Task Credits"],
+        "summary": "Get Task Credits for a Project",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": { "type": "string" },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "task_credits": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/TaskCredit" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Task Credits"],
+        "summary": "Create a Task Credit",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": { "type": "string" },
+            "required": true,
+            "example": "026da5d1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "task_id": { "type": "integer", "example": 7 },
+                  "user_id": { "type": "integer", "example": 42 },
+                  "credits": { "type": "number", "example": 5.0 },
+                  "comment": { "type": "string", "example": "Credit for logo design" },
+                  "service_checkout_id": { "type": "integer", "nullable": true },
+                  "service_id": { "type": "integer", "nullable": true },
+                  "invoice_service_id": { "type": "integer", "nullable": true },
+                  "automated": { "type": "boolean", "example": false }
+                },
+                "required": ["task_id", "user_id", "credits"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task credit created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "task_credit": { "$ref": "#/components/schemas/TaskCredit" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task_credits/{task_credit_id}": {
+      "get": {
+        "tags": ["Task Credits"],
+        "summary": "Get a specific task credit",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "task_credit_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task credit detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "task_credit": { "$ref": "#/components/schemas/TaskCredit" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Task Credits"],
+        "summary": "Update a task credit",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "task_credit_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "task_id": { "type": "integer", "example": 7 },
+                  "user_id": { "type": "integer", "example": 42 },
+                  "credits": { "type": "number", "example": 5.0 },
+                  "comment": { "type": "string", "example": "Updated credit note" },
+                  "service_checkout_id": { "type": "integer", "nullable": true },
+                  "service_id": { "type": "integer", "nullable": true },
+                  "invoice_service_id": { "type": "integer", "nullable": true },
+                  "automated": { "type": "boolean", "example": false }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task credit updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "task_credit": { "$ref": "#/components/schemas/TaskCredit" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Task Credits"],
+        "summary": "Delete a task credit",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "task_credit_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task credit deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true }
                   }
                 }
               }

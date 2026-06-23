@@ -135,6 +135,16 @@
       ]
     },
     {
+      "group": "Task Credits",
+      "pages": [
+        "api-reference/task_credits/get",
+        "api-reference/task_credits/create",
+        "api-reference/task_credits/show",
+        "api-reference/task_credits/patch",
+        "api-reference/task_credits/delete"
+      ]
+    },
+    {
       "group": "Timesheets",
       "pages": [
         "api-reference/timesheets/get",
